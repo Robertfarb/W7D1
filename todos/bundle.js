@@ -136,22 +136,22 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _todo_list_container = __webpack_require__(/*! ./todos/todo_list_container */ "./frontend/components/todos/todo_list_container.jsx");
+
+var _todo_list_container2 = _interopRequireDefault(_todo_list_container);
+
+var _todo_form_container = __webpack_require__(/*! ./todos/todo_form_container */ "./frontend/components/todos/todo_form_container.jsx");
+
+var _todo_form_container2 = _interopRequireDefault(_todo_form_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App() {
   return _react2.default.createElement(
-    "div",
+    'div',
     null,
-    _react2.default.createElement("iframe", { src: "https://giphy.com/embed/4XZAPHsKaY21W", width: "480", height: "480", frameBorder: "0", className: "giphy-embed", allowFullScreen: true }),
-    _react2.default.createElement(
-      "p",
-      null,
-      _react2.default.createElement(
-        "a",
-        { href: "https://giphy.com/gifs/funny-dancing-animal-4XZAPHsKaY21W" },
-        "via GIPHY"
-      )
-    )
+    _react2.default.createElement(_todo_list_container2.default, null),
+    _react2.default.createElement(_todo_form_container2.default, null)
   );
 };
 
@@ -197,6 +197,288 @@ var Root = function Root(_ref) {
 };
 
 exports.default = Root;
+
+/***/ }),
+
+/***/ "./frontend/components/todos/todo_form.jsx":
+/*!*************************************************!*\
+  !*** ./frontend/components/todos/todo_form.jsx ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _todo_api_util = __webpack_require__(/*! ../../utils/todo_api_util */ "./frontend/utils/todo_api_util.js");
+
+var _todo_api_util2 = _interopRequireDefault(_todo_api_util);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ToDoForm = function (_React$Component) {
+  _inherits(ToDoForm, _React$Component);
+
+  function ToDoForm(props) {
+    _classCallCheck(this, ToDoForm);
+
+    var _this = _possibleConstructorReturn(this, (ToDoForm.__proto__ || Object.getPrototypeOf(ToDoForm)).call(this, props));
+
+    _this.state = {
+      title: '',
+      body: '',
+      done: false
+    };
+    _this.handleInputTitle = _this.handleInputTitle.bind(_this);
+    _this.handleInputBody = _this.handleInputBody.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(ToDoForm, [{
+    key: 'handleInputTitle',
+    value: function handleInputTitle(e) {
+      console.log(e.target.value);
+      this.setState({ title: e.target.value });
+    }
+  }, {
+    key: 'handleInputBody',
+    value: function handleInputBody(e) {
+      console.log(e.target.value);
+      this.setState({ body: e.target.value });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      // debugger
+
+      e.preventDefault();
+      var newTodo = {};
+      newTodo.title = this.state.title;
+      newTodo.body = this.state.body;
+      newTodo.id = (0, _todo_api_util2.default)();
+      newTodo.done = this.state.done;
+      this.props.receiveTodo(newTodo);
+      this.setState({
+        title: "",
+        body: '',
+        done: false
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'form',
+        null,
+        _react2.default.createElement(
+          'label',
+          null,
+          'Title',
+          _react2.default.createElement('input', { onChange: this.handleInputTitle, value: this.state.title })
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          'label',
+          null,
+          'Body',
+          _react2.default.createElement('input', { onChange: this.handleInputBody, value: this.state.body })
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          'button',
+          { onClick: this.handleSubmit },
+          'Create Todo!'
+        )
+      );
+    }
+  }]);
+
+  return ToDoForm;
+}(_react2.default.Component);
+
+exports.default = ToDoForm;
+
+/***/ }),
+
+/***/ "./frontend/components/todos/todo_form_container.jsx":
+/*!***********************************************************!*\
+  !*** ./frontend/components/todos/todo_form_container.jsx ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _todo_form = __webpack_require__(/*! ./todo_form */ "./frontend/components/todos/todo_form.jsx");
+
+var _todo_form2 = _interopRequireDefault(_todo_form);
+
+var _todo_actions = __webpack_require__(/*! ../../actions/todo_actions */ "./frontend/actions/todo_actions.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {};
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    receiveTodo: function receiveTodo(todo) {
+      return dispatch((0, _todo_actions.receiveTodo)(todo));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_todo_form2.default);
+
+/***/ }),
+
+/***/ "./frontend/components/todos/todo_list.jsx":
+/*!*************************************************!*\
+  !*** ./frontend/components/todos/todo_list.jsx ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _todo_list_item = __webpack_require__(/*! ./todo_list_item */ "./frontend/components/todos/todo_list_item.jsx");
+
+var _todo_list_item2 = _interopRequireDefault(_todo_list_item);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var todoList = function todoList(props) {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h2',
+      null,
+      'To Do List:'
+    ),
+    _react2.default.createElement(
+      'ul',
+      null,
+      props.todos.map(function (el) {
+        return _react2.default.createElement(_todo_list_item2.default, { key: el.id, todo: el });
+      })
+    )
+  );
+};
+
+exports.default = todoList;
+
+/***/ }),
+
+/***/ "./frontend/components/todos/todo_list_container.jsx":
+/*!***********************************************************!*\
+  !*** ./frontend/components/todos/todo_list_container.jsx ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _todo_list = __webpack_require__(/*! ./todo_list */ "./frontend/components/todos/todo_list.jsx");
+
+var _todo_list2 = _interopRequireDefault(_todo_list);
+
+var _todo_actions = __webpack_require__(/*! ../../actions/todo_actions */ "./frontend/actions/todo_actions.js");
+
+var _selectors = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
+
+var _selectors2 = _interopRequireDefault(_selectors);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    todos: (0, _selectors2.default)(state)
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    receiveTodo: function receiveTodo(todo) {
+      return dispatch((0, _todo_actions.receiveTodo)(todo));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_todo_list2.default);
+
+/***/ }),
+
+/***/ "./frontend/components/todos/todo_list_item.jsx":
+/*!******************************************************!*\
+  !*** ./frontend/components/todos/todo_list_item.jsx ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ToDoListItem = function ToDoListItem(props) {
+  return _react2.default.createElement(
+    'li',
+    null,
+    props.todo.title
+  );
+};
+
+exports.default = ToDoListItem;
 
 /***/ }),
 
@@ -398,6 +680,27 @@ document.addEventListener('DOMContentLoaded', function () {
   window.receiveTodo = _todo_actions.receiveTodo;
   window.allTodos = _selectors2.default;
 });
+
+/***/ }),
+
+/***/ "./frontend/utils/todo_api_util.js":
+/*!*****************************************!*\
+  !*** ./frontend/utils/todo_api_util.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+function uniqueId() {
+  return new Date().getTime();
+}
+
+exports.default = uniqueId;
 
 /***/ }),
 
