@@ -10,6 +10,7 @@ class ToDoForm extends React.Component {
       done: false
     };
     this.handleInputTitle = this.handleInputTitle.bind(this);
+    this.handleInput = this.handleInput.bind(this);
     this.handleInputBody = this.handleInputBody.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -23,6 +24,14 @@ class ToDoForm extends React.Component {
   console.log(e.target.value);
     this.setState({ body: e.target.value });
   }
+
+  handleInput(type, e) {
+    return (e) => {
+      console.log(e.target.value);
+      this.setState({ [type]: e.target.value });
+    };
+  }
+
 
   handleSubmit(e) {
     // debugger
@@ -45,11 +54,11 @@ class ToDoForm extends React.Component {
     return (
       <form>
         <label>Title
-          <input onChange={this.handleInputTitle} value={this.state.title}></input>
+          <input onChange={this.handleInput('title')} value={this.state.title}></input>
         </label>
         <br></br>
         <label>Body
-          <input onChange={this.handleInputBody} value={this.state.body}></input>
+          <input onChange={this.handleInput('body')} value={this.state.body}></input>
         </label>
         <br></br>
         <button onClick={this.handleSubmit}>Create Todo!</button>

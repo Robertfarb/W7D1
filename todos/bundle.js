@@ -226,6 +226,8 @@ var _todo_api_util2 = _interopRequireDefault(_todo_api_util);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -246,6 +248,7 @@ var ToDoForm = function (_React$Component) {
       done: false
     };
     _this.handleInputTitle = _this.handleInputTitle.bind(_this);
+    _this.handleInput = _this.handleInput.bind(_this);
     _this.handleInputBody = _this.handleInputBody.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     return _this;
@@ -262,6 +265,16 @@ var ToDoForm = function (_React$Component) {
     value: function handleInputBody(e) {
       console.log(e.target.value);
       this.setState({ body: e.target.value });
+    }
+  }, {
+    key: 'handleInput',
+    value: function handleInput(type, e) {
+      var _this2 = this;
+
+      return function (e) {
+        console.log(e.target.value);
+        _this2.setState(_defineProperty({}, type, e.target.value));
+      };
     }
   }, {
     key: 'handleSubmit',
@@ -291,14 +304,14 @@ var ToDoForm = function (_React$Component) {
           'label',
           null,
           'Title',
-          _react2.default.createElement('input', { onChange: this.handleInputTitle, value: this.state.title })
+          _react2.default.createElement('input', { onChange: this.handleInput('title'), value: this.state.title })
         ),
         _react2.default.createElement('br', null),
         _react2.default.createElement(
           'label',
           null,
           'Body',
-          _react2.default.createElement('input', { onChange: this.handleInputBody, value: this.state.body })
+          _react2.default.createElement('input', { onChange: this.handleInput('body'), value: this.state.body })
         ),
         _react2.default.createElement('br', null),
         _react2.default.createElement(
